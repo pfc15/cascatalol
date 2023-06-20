@@ -35,6 +35,7 @@ if __name__=="__main__":
     print(df.head(10))
     limpo = df.iloc[:, 9:].transpose()
     limpo.columns = df.iloc[:,0].transpose().tolist()
-    jogador = st.text_area("qual jogador vc quer ver? ", max=20)
+    jogador = st.text_area("qual jogador vc quer ver? ", max_chars=20, height=None)
+    jogador = "".join(jogador.split())
     if jogador in df.nick.values:
         cascata(limpo, jogador)
