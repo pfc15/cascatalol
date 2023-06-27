@@ -101,9 +101,9 @@ def refazer_ylabel(ax=None):
     """
     if ax is None:
         ax = plot.gca()
-    colors=["r","gold","lightgreen","purple"]
-    y=[60,70,80,90,100]
-    x=[0,0,0,0,0]
+    colors=["black", "darkred", "r","gold","lightgreen","purple"]
+    y=[45, 50,60,70,80,90,100]
+    x=[0, 0,0,0,0,0,0]
     points = np.array([x, y]).T.reshape(-1, 1, 2)
     segments = np.concatenate([points[:-1], points[1:]], axis=1)
     lc = LineCollection(segments,colors=colors, linewidth=2,
