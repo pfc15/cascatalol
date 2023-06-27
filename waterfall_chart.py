@@ -80,7 +80,7 @@ def plot(index, data, Title="", x_lab="", y_lab="",
     #Get the net total number for the final element in the waterfall
     total = trans.sum().amount
     if media:
-        total =media
+        total = media
     trans.loc[net_label]= total
     blank.loc[net_label] = total
 

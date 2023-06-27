@@ -12,21 +12,26 @@ def cascata(df, nome_procurado):
     """
     função criar gráfico em cascata de um jogador apenas
     """
+    print(df)
     procurado = df[nome_procurado]
     lista = pd.Series()
     anterior =0
+    cont =0
     for e in procurado.index:
-        if e==procurado.index[0]:
-            anterior= procurado[e]
+        if pd.isna(procurado[cont]):
+            cont+=1
+            lista[e] = np.nan
+        elif e==procurado.index[cont]:
+            anterior = procurado[e]
             lista[e] = procurado[e]
         else:
             lista[e] =  procurado[e] - anterior
             anterior = procurado[e]
-    
+
     procurado = pd.DataFrame(procurado.values, index=procurado.index, columns=["jogador"])
+    
     procurado = procurado.assign(delta=lista.values)
     procurado = procurado.dropna(how="any")
-    print(procurado)
     st.pyplot(waterfall_chart.plot(procurado.index, procurado["delta"], trocay=True, net_label="média", media=np.mean(procurado["jogador"])))
     plot.title(f"gráfico cascata cartinhas {nome_procurado}")
 
@@ -77,7 +82,7 @@ def img_time(df, time):
         limpo = df.iloc[:, 9:].transpose()
         limpo.columns = df.iloc[:,0].transpose().tolist()
         limpo = pd.DataFrame(limpo.values, index=limpo.index, columns=limpo.columns)
-        limpo = limpo.dropna(how="any")
+        limpo = limpo.dropna(how="all")
         y = pd.Series(limpo[jogador])
         x = pd.Series(range(1, len(limpo)+1))
         #image_path = get_sample_data('ada.png')
