@@ -12,7 +12,6 @@ def cascata(df, nome_procurado):
     """
     função criar gráfico em cascata de um jogador apenas
     """
-    print(df)
     procurado = df[nome_procurado]
     lista = pd.Series()
     anterior =0
@@ -138,13 +137,25 @@ def imscatter(x, y, image, ax=None, zoom=1):
 if __name__=="__main__":
     df = pd.read_excel("cartinhas.xlsx", "jogadores")
     print(df.head(10))
-    limpo = df.iloc[:, 9:].transpose()
-    limpo.columns = df.iloc[:,0].transpose().tolist()
+    
     jogador = st.text_area("qual jogador vc quer ver? ")
-    jogador = "".join(jogador.split())
+    jogador = " ".join(jogador.split())
      # codigo de ver o time
+    print('-='*50)
     if jogador in df.nick.values:
+        limpo = df.iloc[:, 9:].transpose()
+        limpo.columns = df.iloc[:,0].transpose().tolist()
+        print(limpo)
         cascata(limpo, jogador)
+    if jogador in df.time.values:
+        ds_time = df.loc[df.time==jogador]
+        jogadores = ds_time.iloc[:,0].transpose().tolist()
+        ds_time = ds_time.iloc[:, 9:].transpose()
+        ds_time.columns = jogadores
+        ds_time[jogador] = ds_time.mean(axis=1)
+        cascata(ds_time, jogador)
+
+
 
     time = st.text_area("qual time você quer ver?")
     time = " ".join(time.split())
